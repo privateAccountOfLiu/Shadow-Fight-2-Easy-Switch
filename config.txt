@@ -1,0 +1,11 @@
+{
+    'x': [-100,100],
+    'y': [-100,100],
+    'z': [-100,100],
+    'radius': [],
+    'type': 'weapon',
+    'rotate_method': 'xyz',
+    'is_draw_edge': True,
+    'is_to_xml': True,
+    'is_to_bin_dec': True
+ }
