@@ -8,6 +8,7 @@ gap_msg_4 = '</Figures>\n</Scene>\n'
 error_mes_0 = 'something_wrong:{}-{}'
 error_mes_1 = 'the iter length must >= 3 but length %d'
 error_mes_2 = 'warning:something_wrong in obj {}-{}'
+error_mes_3 = 'warning:please ensure the content of ./bin_dec/output.bindec is NULL or WHAT YOU WANT'
 common_mes = 'press Enter to exit:'
 
 node_msg = ('<MN{}{} Type="MacroNode" '

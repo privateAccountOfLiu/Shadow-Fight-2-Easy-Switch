@@ -124,7 +124,7 @@ class Edge(Triangle):
 
 class BinDec:
     def __init__(self, file: str):
-        self.file = open(file, 'w')
+        self.file = open(file, 'a+')
 
     def write(self, data: list):  # 写入一帧
         string = f'[{len(data)}]'

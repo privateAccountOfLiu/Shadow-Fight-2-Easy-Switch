@@ -1,5 +1,5 @@
 from classes import *
-from matrix import Matrix
+import os
 
 
 def get_config(file='config.txt'):  # 获取配置
@@ -8,7 +8,14 @@ def get_config(file='config.txt'):  # 获取配置
     return set_config
 
 
-def edit_obj_data(set_config, file='input.obj'):    # 对obj获取到的数据进行处理
+def make_dir():
+    if not os.path.exists('./bin_dec'):
+        os.mkdir('./bin_dec')
+    if not os.path.exists('./xml'):
+        os.mkdir('./xml')
+
+
+def edit_obj_data(set_config, file='./xml/input.obj'):    # 对obj获取到的数据进行处理
     obj_p = Obj(file)
     obj_p.standardize_0()
     obj_p.standardize_1()
@@ -18,13 +25,23 @@ def edit_obj_data(set_config, file='input.obj'):    # 对obj获取到的数据�
     return obj_p
 
 
-def write_bin_dec(obj_p, file='output.bindec'):    # 写入至.bindec文件
+def write_bin_dec_part(obj_p, file='./bin_dec/output.bindec'):    # 写入至.bindec文件
     bin_dec = BinDec(file)
     bin_dec.write(obj_p.data['v '])
     bin_dec.close()
 
 
-def write_xml(set_config, obj_p, file='output.xml'):
+def write_bin_dec(set_config, file=(a := './bin_dec/') + (b := 'output.bindec')):
+    tar = os.listdir(a)
+    if b in tar:
+        tar.remove(b)
+        print(error_mes_3)
+    for obj_name in tar:
+        obj_p = edit_obj_data(set_config, a + obj_name)
+        write_bin_dec_part(obj_p, file)
+
+
+def write_xml(set_config, obj_p, file='./xml/output.xml'):
     with open(file, 'w') as f_xml:
         f_xml.write(gap_msg_1)
         f_xml.writelines([str(Node(*node, model_type=set_config['type'], node_id=index+1)) + '\n'

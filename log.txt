@@ -1,1 +1,10 @@
 closing parenthesis '}' does not match opening parenthesis '[' on line 4 (<string>, line 11)
+invalid decimal literal (<string>, line 1)
+invalid decimal literal (<string>, line 1)
+' '
+' '
+Value after * must be an iterable, not NoneType
+Value after * must be an iterable, not NoneType
+[Errno 2] No such file or directory: './bin_dec/output.bindec'
+expected str, bytes or os.PathLike object, not Obj
+list.remove(x): x not in list
