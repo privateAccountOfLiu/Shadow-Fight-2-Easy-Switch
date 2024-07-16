@@ -12,8 +12,10 @@ class Obj:
     def get_data(self):  # 筛选出v,f,l数据
         for line in self.text:
             try:
-                self.data.get(line[:2], []).append(list(map(eval, line.split()[1:])))  # 获取v,f,l数据
-            except TypeError and NameError:
+                if line[:2] in self.data:
+                    self.data.get(line[:2], []).append(list(map(eval, line.split()[1:])))  # 获取v,f,l数据
+            except Exception as e:
+                print(error_mes_2.format(type(e), e))
                 continue
 
     def standardize(self):  # 将多边形切割成三角形，保证每个f数据都为3个点
