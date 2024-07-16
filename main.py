@@ -13,3 +13,6 @@ if __name__ == '__main__':
         print(error_mes_0.format(e))
         with open('log.txt', 'a+') as log:
             log.write(str(e) + '\n')
+    finally:
+        input(common_mes)
+
