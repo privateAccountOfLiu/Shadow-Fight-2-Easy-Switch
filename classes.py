@@ -12,21 +12,40 @@ class Obj:
     def get_data(self):  # 筛选出v,f,l数据
         for line in self.text:
             try:
-                if line[:2] in self.data:
-                    self.data.get(line[:2], []).append(list(map(eval, line.split()[1:])))  # 获取v,f,l数据
+                match line[:2]:
+                    case 'v ':
+                        self.data['v '].append(list(map(eval, line.split()[1:])))
+                    case 'f ' | 'l ':
+                        self.data[line[:2]].append(line.split()[1:])
             except Exception as e:
                 print(error_mes_2.format(type(e), e))
                 continue
 
-    def standardize(self):  # 将多边形切割成三角形，保证每个f数据都为3个点
+    def standardize_0(self):  # 将多边形切割成三角形，保证每个f数据都为3个点
         for index, i in enumerate(self.data['f ']):
             if len(i) == 3:
                 pass
             elif len(i) > 3:
                 self.data['f '].extend((i[0], i[j-1], i[j]) for j in range(2, len(i)))
-                del self.data['f '][index]
+                self.data['f '][index] = [None] * 3
             else:
                 raise ValueError(error_mes_1 % i)
+        self.clean()
+
+    def standardize_1(self):   # 处理obj f数据中含有/的情况
+        for index, lst in enumerate(self.data['f ']):
+            if "/" in lst[0]:
+                result = []
+                for char in lst:
+                    part = [i for i in char.replace('/', ' ').split(' ') if i != '']
+                    result.append(part)
+                self.data['f '].extend(Matrix(result).transpose.value)
+                self.data['f '][index] = [None] * 3
+        self.clean()
+
+    def clean(self):    # 清除f数据列表中的None
+        while [None] * 3 in self.data['f ']:
+            self.data['f '].remove([None] * 3)
 
     def rotate(self, method='xyz'):  # 实现坐标旋转
         dic = {'x': 0, 'y': 1, 'z': 2}

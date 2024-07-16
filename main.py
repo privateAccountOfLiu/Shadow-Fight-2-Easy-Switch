@@ -5,9 +5,9 @@ if __name__ == '__main__':
     try:
         config = get_config()
         obj = edit_obj_data(config)
-        if config['is_to_bin_dec']:
+        if config.get('is_to_bin_dec', False):
             write_bin_dec(obj)
-        if config['is_to_xml']:
+        if config.get('is_to_xml', False):
             write_xml(config, obj)
     except Exception as e:
         print(error_mes_0.format(type(e), e))
