@@ -5,8 +5,9 @@ gap_msg_2 = '</Nodes>\n<Edges>\n'
 gap_msg_3 = '</Edges>\n<Figures>\n'
 gap_msg_4 = '</Figures>\n</Scene>\n'
 
-error_mes_0 = 'something_wrong:{}'
+error_mes_0 = 'something_wrong:{}-{}'
 error_mes_1 = 'the iter length must >= 3 but length %d'
+error_mes_2 = 'warning:something_wrong in obj {}-{}'
 common_mes = 'press Enter to exit:'
 
 node_msg = ('<MN{}{} Type="MacroNode" '
