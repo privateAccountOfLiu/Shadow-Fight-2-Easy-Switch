@@ -7,6 +7,7 @@ gap_msg_4 = '</Figures>\n</Scene>\n'
 
 error_mes_0 = 'something_wrong:{}'
 error_mes_1 = 'the iter length must >= 3 but length %d'
+common_mes = 'press Enter to exit:'
 
 node_msg = ('<MN{}{} Type="MacroNode" '
             'X="{:.5f}" Y="{:.5f}" Z="{:.5f}" Fixed="0" '
