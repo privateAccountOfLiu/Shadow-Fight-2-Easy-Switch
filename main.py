@@ -9,7 +9,7 @@ if __name__ == '__main__':
             write_bin_dec(obj)
         if config['is_to_xml']:
             write_xml(config, obj)
-    except TypeError and ValueError and NameError and SyntaxError as e:
+    except Exception as e:
         print(error_mes_0.format(e))
         with open('log.txt', 'a+') as log:
             log.write(str(e) + '\n')
