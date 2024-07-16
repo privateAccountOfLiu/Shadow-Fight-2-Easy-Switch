@@ -10,9 +10,8 @@ if __name__ == '__main__':
         if config['is_to_xml']:
             write_xml(config, obj)
     except Exception as e:
-        print(error_mes_0.format(e))
+        print(error_mes_0.format(type(e), e))
         with open('log.txt', 'a+') as log:
             log.write(str(e) + '\n')
     finally:
         input(common_mes)
-
