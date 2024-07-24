@@ -8,3 +8,4 @@ Value after * must be an iterable, not NoneType
 [Errno 2] No such file or directory: './bin_dec/output.bindec'
 expected str, bytes or os.PathLike object, not Obj
 list.remove(x): x not in list
+'float' object is not subscriptable

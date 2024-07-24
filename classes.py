@@ -2,14 +2,14 @@ from values import *
 from matrix import Matrix, Vector, solve
 
 
-class Obj:
+class Obj : # .obj模型文件的类
     def __init__(self, file: str):
         with open(file, 'r') as f:
             self.text = f.readlines()
             self.data = {'v ': [], 'f ': [], 'l ': []}
             self.get_data()
 
-    def get_data(self):  # 筛选出v,f,l数据
+    def get_data(self) -> None:  # 筛选出v,f,l数据
         for line in self.text:
             try:
                 match line[:2]:
@@ -21,7 +21,7 @@ class Obj:
                 print(error_mes_2.format(type(e), e))
                 continue
 
-    def standardize_0(self):  # 将多边形切割成三角形，保证每个f数据都为3个点
+    def standardize_0(self) -> None:  # 将多边形切割成三角形，保证每个f数据都为3个点
         for index, i in enumerate(self.data['f ']):
             if len(i) == 3:
                 pass
@@ -32,7 +32,7 @@ class Obj:
                 raise ValueError(error_mes_1 % i)
         self.clean()
 
-    def standardize_1(self):   # 处理obj f数据中含有/的情况
+    def standardize_1(self) -> None:   # 处理obj f数据中含有/的情况
         for index, lst in enumerate(self.data['f ']):
             if "/" in lst[0]:
                 result = []
@@ -43,16 +43,16 @@ class Obj:
                 self.data['f '][index] = [None] * 3
         self.clean()
 
-    def clean(self):    # 清除f数据列表中的None
+    def clean(self) -> None:    # 清除f数据列表中的None
         while [None] * 3 in self.data['f ']:
             self.data['f '].remove([None] * 3)
 
-    def rotate(self, method='xyz'):  # 实现坐标旋转
+    def rotate(self, method='xyz') -> None:  # 实现坐标旋转
         dic = {'x': 0, 'y': 1, 'z': 2}
         for i in range(len(self.data['v '])):
             self.data['v '][i] = list(self.data['v '][i][dic[j]] for j in method)
 
-    def zoom(self, vec_c):  # 对模型数据进行缩放
+    def zoom(self, vec_c) -> list:  # 对模型数据进行缩放
         args = []
         extr = [[min(self.data['v '], key=lambda x: x[i])[i],
                  max(self.data['v '], key=lambda x: x[i])[i]] for i in range(3)]
@@ -63,7 +63,7 @@ class Obj:
         return args
 
 
-class Node:
+class Node: # 在.xml模型中的Node类
     def __init__(self, x, y, z, model_type="weapon", node_id=1):
         self.x, self.y, self.z = x, y, z
         self.id, self.type = node_id, model_type
@@ -91,14 +91,14 @@ class Node:
                                *type_child_node[self.type].values(),
                                self.lcc1, self.lcc2, self.lcc3, self.lcc4)
 
-    def count_lcc(self):   # 计算lcc向量
+    def count_lcc(self) -> Vector:   # 计算lcc向量
         vector = Vector([self.x, self.y, self.z]) - node_lcc_ori[self.type]
         basis = node_lcc_basis[self.type] - Matrix([i * 3 for i in node_lcc_ori[self.type]])
         lcc = basis.inv * vector
         return lcc
 
 
-class Triangle:
+class Triangle: # 在.xml模型中的三角形Triangle类
     def __init__(self, nodes, model_type='weapon', tri_id=1):
         self.nodes, self.type, self.id = nodes, model_type, tri_id
 
@@ -106,7 +106,7 @@ class Triangle:
         return triangle_msg.format(self.type, *self.nodes, self.id)
 
 
-class Edge(Triangle):
+class Edge(Triangle): # 在.xml模型中的连线Edge类
     def __init__(self, nodes, model_type='weapon', edge_id=1, radius=(3, 3), is_draw=False):
         super().__init__(nodes, model_type, edge_id)
         self.radius, self.mode = radius, is_draw
@@ -115,23 +115,23 @@ class Edge(Triangle):
         return edge_msg_0.format(self.type, *self.nodes, self.id, self.radius[0])
 
     @property
-    def draw(self):  # 返回<Figures>区的edge连线（如果你想将他画出来）
+    def draw(self) -> str:  # 返回<Figures>区的edge连线（如果你想将他画出来）
         if self.mode:
             return edge_msg_1.format(self.type, self.id, *self.radius)
         else:
             return ''
 
 
-class BinDec:
+class BinDec: # Bin文件中间文件类
     def __init__(self, file: str):
         self.file = open(file, 'a+')
 
-    def write(self, data: list):  # 写入一帧
+    def write(self, data: list) -> None:  # 写入一帧
         string = f'[{len(data)}]'
         for node in data:
             string += '{' + '{},{},{}'.format(*node) + '}'
         string += 'END\n'
         self.file.write(string)
 
-    def close(self):
+    def close(self) -> None:
         self.file.close()

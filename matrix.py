@@ -9,7 +9,7 @@ def combine(n: int, m: int) -> list:
     return list(combinations(range(1, n+1), m))
 
 
-def solve(arg_mat, constant_vec):
+def solve(arg_mat, constant_vec) -> list:
     result = []
     if not arg_mat.det:
         raise ValueError('Singular matrix')
@@ -55,7 +55,7 @@ class Matrix(list):
         else:
             raise ValueError("This object cannot be as a matrix")
 
-    def __str__(self):
+    def __str__(self) -> str:
         string = f'\n{self.__class__.__name__}({self.i}×{self.j})=\n'
         for i in range(self.i):
             for j in range(self.j):
@@ -101,7 +101,7 @@ class Matrix(list):
             TypeError(f'Cannot multiply {type(self)} object and {type(other)} object')
 
     @property
-    def det(self) -> int:
+    def det(self) -> int | float:
         if not self.is_square:
             raise ValueError('Is not a square matrix')
         else:
@@ -130,23 +130,23 @@ class Matrix(list):
                 all_possibilities.append(Matrix([[self[_i-1][_j-1] for _j in j_list] for _i in i_list]).det)
         return all_possibilities
 
-    def algebraic_complement(self, i, j) -> int:
+    def algebraic_complement(self, i, j) -> int | float:
         i_list = [m for m in range(self.i) if m != i - 1]
         j_list = [n for n in range(self.j) if n != j - 1]
         return Matrix([[(-1) ** (_i + _j) * self[_i][_j] for _j in j_list] for _i in i_list]).det
 
     @property
-    def transpose(self) -> __name__:
+    def transpose(self):
         new_value = [[self[j][i] for j in range(self.i)] for i in range(self.j)]
         return Matrix(new_value)
 
     @property
-    def adj(self) -> __name__:
+    def adj(self):
         return Matrix(
             [[self.algebraic_complement(i + 1, j + 1) for j in range(self.j)] for i in range(self.i)]).transpose
 
     @property
-    def inv(self) -> __name__:
+    def inv(self):
         if not self.is_square:
             raise ValueError('Is not a square matrix')
         elif self.det == 0:
@@ -154,7 +154,7 @@ class Matrix(list):
         else:
             return self.adj * (1 / self.det)
 
-    def exchange(self, method, *tar):
+    def exchange(self, method, *tar) -> None:
         if method == 'r':
             self[tar[0] - 1], self[tar[1] - 1] = self[tar[1] - 1], self[tar[0] - 1]
         elif method == 'c':
@@ -164,7 +164,7 @@ class Matrix(list):
         else:
             raise ValueError('Unsupported function')
 
-    def mul_k(self, method, index, k):
+    def mul_k(self, method, index, k) -> None:
         if method == 'r':
             for i in range(len(self[index-1])):
                 self[index-1][i] *= k
@@ -176,7 +176,7 @@ class Matrix(list):
         else:
             raise ValueError('Unsupported function')
 
-    def add_vector(self, method, i, j, k):
+    def add_vector(self, method, i, j, k) -> None:
         if method == 'r':
             for _i in range(self.j):
                 self[i-1][_i] += k * self[j-1][_i]

@@ -1,15 +1,17 @@
 from matrix import Matrix, Vector
 
-gap_msg_1 = '<Scene>\n<Nodes>\n'
-gap_msg_2 = '</Nodes>\n<Edges>\n'
-gap_msg_3 = '</Edges>\n<Figures>\n'
-gap_msg_4 = '</Figures>\n</Scene>\n'
+gap_msg_0 = '<Scene>\n<Nodes>\n'
+gap_msg_1 = '</Nodes>\n<Edges>\n'
+gap_msg_2 = '</Edges>\n<Figures>\n'
+gap_msg_3 = '</Figures>\n</Scene>\n'
 
 error_mes_0 = 'something_wrong:{}-{}'
 error_mes_1 = 'the iter length must >= 3 but length %d'
 error_mes_2 = 'warning:something_wrong in obj {}-{}'
 error_mes_3 = 'warning:please ensure the content of ./bin_dec/output.bindec is NULL or WHAT YOU WANT'
-common_mes = 'press Enter to exit:'
+common_mes_0 = 'press Enter to exit:'
+common_mes_1 = 'please ensure your range in config.txt:(y/n)'
+
 
 node_msg = ('<MN{}{} Type="MacroNode" '
             'X="{:.5f}" Y="{:.5f}" Z="{:.5f}" Fixed="0" '

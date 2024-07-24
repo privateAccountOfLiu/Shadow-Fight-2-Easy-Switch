@@ -6,6 +6,7 @@ if __name__ == '__main__':
         config = get_config()
         make_dir()
         obj = edit_obj_data(config)
+        print_lim_and_ask(obj)
         if config.get('is_to_bin_dec', False):
             write_bin_dec(config)
         if config.get('is_to_xml', False):
@@ -15,4 +16,4 @@ if __name__ == '__main__':
         with open('log.txt', 'a+') as log:
             log.write(str(e) + '\n')
     finally:
-        input(common_mes)
+        input(common_mes_0)
