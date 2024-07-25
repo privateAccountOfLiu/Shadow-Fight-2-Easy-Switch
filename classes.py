@@ -2,7 +2,7 @@ from values import *
 from matrix import Matrix, Vector, solve
 
 
-class Obj : # .obj模型文件的类
+class Obj:  # .obj模型文件的类
     def __init__(self, file: str):
         with open(file, 'r') as f:
             self.text = f.readlines()
@@ -37,10 +37,9 @@ class Obj : # .obj模型文件的类
             if "/" in lst[0]:
                 result = []
                 for char in lst:
-                    part = [i for i in char.replace('/', ' ').split(' ') if i != '']
+                    part = [i for i in char.replace('/', ' ').split(' ') if i != ''][0]
                     result.append(part)
-                self.data['f '].extend(Matrix(result).transpose.value)
-                self.data['f '][index] = [None] * 3
+                self.data['f '][index] = result
         self.clean()
 
     def clean(self) -> None:    # 清除f数据列表中的None
@@ -63,7 +62,7 @@ class Obj : # .obj模型文件的类
         return args
 
 
-class Node: # 在.xml模型中的Node类
+class Node:  # 在.xml模型中的Node类
     def __init__(self, x, y, z, model_type="weapon", node_id=1):
         self.x, self.y, self.z = x, y, z
         self.id, self.type = node_id, model_type
@@ -98,7 +97,7 @@ class Node: # 在.xml模型中的Node类
         return lcc
 
 
-class Triangle: # 在.xml模型中的三角形Triangle类
+class Triangle:  # 在.xml模型中的三角形Triangle类
     def __init__(self, nodes, model_type='weapon', tri_id=1):
         self.nodes, self.type, self.id = nodes, model_type, tri_id
 
@@ -106,7 +105,7 @@ class Triangle: # 在.xml模型中的三角形Triangle类
         return triangle_msg.format(self.type, *self.nodes, self.id)
 
 
-class Edge(Triangle): # 在.xml模型中的连线Edge类
+class Edge(Triangle):  # 在.xml模型中的连线Edge类
     def __init__(self, nodes, model_type='weapon', edge_id=1, radius=(3, 3), is_draw=False):
         super().__init__(nodes, model_type, edge_id)
         self.radius, self.mode = radius, is_draw
@@ -122,7 +121,7 @@ class Edge(Triangle): # 在.xml模型中的连线Edge类
             return ''
 
 
-class BinDec: # Bin文件中间文件类
+class BinDec:  # Bin文件中间文件类
     def __init__(self, file: str):
         self.file = open(file, 'a+')
 
