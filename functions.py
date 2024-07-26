@@ -3,6 +3,10 @@ from sys import exit
 import os
 
 
+def notice() -> None:
+    print('作者privateAccountOfLiu,本程序未经授权严禁用于商业活动')
+
+
 def get_config(file='config.txt') -> dict:  # 获取配置
     with open(file, 'r') as f_in:
         set_config = eval(f_in.read())
