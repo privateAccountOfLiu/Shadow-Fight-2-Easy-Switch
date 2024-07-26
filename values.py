@@ -1,5 +1,10 @@
 from matrix import Matrix, Vector
 
+
+def notice() -> None:
+    print('作者privateAccountOfLiu,本程序未经授权严禁用于商业活动')
+
+
 gap_msg_0 = '<Scene>\n<Nodes>\n'
 gap_msg_1 = '</Nodes>\n<Edges>\n'
 gap_msg_2 = '</Edges>\n<Figures>\n'
