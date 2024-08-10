@@ -126,7 +126,10 @@ class BinDec:  # Bin文件中间文件类
         self.file = open(file, 'a+')
 
     def write(self, data: list) -> None:  # 写入一帧
-        string = f'[{len(data)}]'
+        string, tar = f'[{len(data)}]', data[-8:]
+        del data[-8:]
+        for index, content in enumerate(tar):
+            data.insert(19 + index, content)
         for node in data:
             string += '{' + '{},{},{}'.format(*node) + '}'
         string += 'END\n'
