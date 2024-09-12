@@ -59,7 +59,7 @@ class Matrix(list):
         string = f'\n{self.__class__.__name__}({self.i}×{self.j})=\n'
         for i in range(self.i):
             for j in range(self.j):
-                string += f'{round(self[i][j],4)}\t'
+                string += f'{self[i][j]:^20.4f}'
             string += '\n'
         return string
 
@@ -210,7 +210,14 @@ class Vector(Matrix):
 
 
 if __name__ == '__main__':
-    matrix1 = Matrix([[1, 1, 2],
-                      [5, 3, 4],
-                      [4, 1, 2],])
-    print(solve(matrix1, Vector([1, 2, 8])))
+    matrix1 = Matrix([[1.12 + 1j, 1.43, 2.07, 7.71],
+                      [5.34 + 3j, 3.23, 4.44, 2.22],
+                      [4.08 - 1j, 1.77, 2.93, 3.03],
+                      [1.11 - 7j, 1.28, 1.39, 1.51]])
+    matrix2 = Matrix([[29.73, 89.28, 10.00],
+                      [10.02, 34.92, 13.23],
+                      [71.17, 56.66, 73.33],
+                      [11.11, 24.40, 79.11]])
+    matrix3 = Matrix([[1, 4, 9]])
+    print(solve(matrix1, Vector([1, 2, 8, 7])))
+    print(matrix1 * matrix2 * 1)
