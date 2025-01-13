@@ -1,5 +1,7 @@
 from values import *
 from matrix import Matrix, Vector, solve
+from struct import unpack, pack
+import os
 
 
 class Obj:  # .obj模型文件的类
@@ -46,12 +48,12 @@ class Obj:  # .obj模型文件的类
         while [None] * 3 in self.data['f ']:
             self.data['f '].remove([None] * 3)
 
-    def rotate(self, method='xyz') -> None:  # 实现坐标旋转
+    def rotate(self, method: str = 'xyz') -> None:  # 实现坐标旋转
         dic = {'x': 0, 'y': 1, 'z': 2}
         for i in range(len(self.data['v '])):
             self.data['v '][i] = list(self.data['v '][i][dic[j]] for j in method)
 
-    def zoom(self, vec_c) -> list:  # 对模型数据进行缩放
+    def zoom(self, vec_c: list) -> list:  # 对模型数据进行缩放
         args = []
         extr = [[min(self.data['v '], key=lambda x: x[i])[i],
                  max(self.data['v '], key=lambda x: x[i])[i]] for i in range(3)]
@@ -60,6 +62,14 @@ class Obj:  # .obj模型文件的类
         for index, node in enumerate(self.data['v ']):
             self.data['v '][index] = [node[i] * args[i][0] + args[i][1] for i in range(3)]
         return args
+
+    def pre_formate_to_bin(self) -> list:  # 转变一帧的数据为lst
+        output, tar = [len(self.data['v ']), ], self.data['v '][-8:]
+        del self.data['v '][-8:]
+        for index, content in enumerate(tar):
+            self.data['v '].insert(19 + index, content)
+        output.append([tuple(node) for node in self.data['v ']])
+        return output
 
 
 class Node:  # 在.xml模型中的Node类
@@ -72,18 +82,23 @@ class Node:  # 在.xml模型中的Node类
     def __add__(self, other):   # 定义加法
         if isinstance(other, Node):
             self.x, self.y, self.z = self.x + other.x, self.y + other.y, self.z + other.z
+            return self
         if isinstance(other, int) or isinstance(other, float):
             self.x, self.y, self.z = self.x + other, self.y + other, self.z + other
-        return self
+            return self
+        else:
+            assert TypeError(error_mes_4)
 
     def __mul__(self, other):   # 定义乘法
         if isinstance(other, Node):
-            return self.x*other.x+self.y*other.y+self.z*other.z
-        if isinstance(other, int) or isinstance(other, float):
+            return self.x * other.x + self.y * other.y + self.z * other.z
+        elif isinstance(other, int) or isinstance(other, float):
             self.x *= other
             self.y *= other
             self.z *= other
             return self
+        else:
+            assert TypeError(error_mes_4)
 
     def __str__(self):  # 定义节点的字符串表现形式
         return node_msg.format(self.type, self.id, self.x, self.y, self.z,
@@ -121,19 +136,54 @@ class Edge(Triangle):  # 在.xml模型中的连线Edge类
             return ''
 
 
-class BinDec:  # Bin文件中间文件类
-    def __init__(self, file: str):
-        self.file = open(file, 'a+')
+class Frame:
+    def __init__(self, length: int, points_lst: list):
+        self.length = length
+        self.points = points_lst
 
-    def write(self, data: list) -> None:  # 写入一帧
-        string, tar = f'[{len(data)}]', data[-8:]
-        del data[-8:]
-        for index, content in enumerate(tar):
-            data.insert(19 + index, content)
-        for node in data:
-            string += '{' + '{},{},{}'.format(*node) + '}'
-        string += 'END\n'
-        self.file.write(string)
+    def shape(self, num: int | float):
+        self.points = [tuple([j * num for j in i]) for i in self.points]
 
-    def close(self) -> None:
-        self.file.close()
+    def __str__(self):
+        return bin_frame_text.format(self.length, self.points)
+
+
+class MoveBin:
+    def __init__(self, f_bin: str):
+        self.bin_file = open(f_bin, 'rb')
+        self.bin_data = self.bin_read()
+        self.frames_num = len(self.bin_data)
+
+    @staticmethod
+    def bin_decode(lst: list) -> list:
+        result, i = [], 0
+        while i < len(lst):
+            if not i:
+                i += 5
+            else:
+                num, frame = lst[i], Frame(lst[i], [])
+                i += 4
+                for n in range(num):
+                    node, coordination = [], []
+                    for m in range(12):
+                        coordination.append(lst[i])
+                        if not (m + 1) % 4:
+                            node.append(unpack('f', pack('4B', *coordination))[0])
+                            coordination = []
+                        i += 1
+                    frame.points.append(tuple(node))
+                i += 1
+                result.append(frame)
+        return result
+
+    def bin_read(self) -> list:
+        with self.bin_file as f:
+            size_file, nums = os.path.getsize(f.name), []
+            for i in range(size_file):
+                data = unpack('B', f.read(1))
+                nums.append(data[0])
+            return self.bin_decode(nums)
+
+    def shape(self, num: int | float = 1) -> None:
+        for i, frame in enumerate(self.bin_data):
+            frame.shape(num)

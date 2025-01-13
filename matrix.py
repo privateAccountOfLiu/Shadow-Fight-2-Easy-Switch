@@ -59,7 +59,7 @@ class Matrix(list):
         string = f'\n{self.__class__.__name__}({self.i}×{self.j})=\n'
         for i in range(self.i):
             for j in range(self.j):
-                string += f'{self[i][j]:^20.4f}'
+                string += f'{self[i][j]:<20.4f}'
             string += '\n'
         return string
 
@@ -199,6 +199,30 @@ class Matrix(list):
         else:
             raise TypeError(f'Can not use {type(other)}')
 
+    @property
+    def get_standard_mat(self):
+        flag, flag1, flag2 = self.i, -1, 0
+        for _i in range(flag):
+            ls = list(range(flag))
+            ls.pop(_i)
+            for _j in ls:
+                print(self)
+                while True:
+                    if self[_i][_i + flag2] and any(self[_i]):
+                        self[_j] = [self[_j][k] - (self[_j][_i + flag2] / self[_i][_i + flag2]) * self[_i][k] for k in range(self.j)]
+                        break
+                    elif not self[_i][_i + flag2]:
+                        flag2 += 1
+                    else:
+                        break
+                if not any(self[_j]) and _j != flag1:
+                    print(any(self[_j]), _j, self[_j], flag1)
+                    self[_j], self[flag1] = self[flag1], self[_j]
+                    flag1 -= 1
+                    ls.insert(_j, _i + 1)
+        return self
+                
+            
 
 class Vector(Matrix):
     def __init__(self, value, is_t=0):
@@ -210,14 +234,14 @@ class Vector(Matrix):
 
 
 if __name__ == '__main__':
-    matrix1 = Matrix([[1.12 + 1j, 1.43, 2.07, 7.71],
-                      [5.34 + 3j, 3.23, 4.44, 2.22],
-                      [4.08 - 1j, 1.77, 2.93, 3.03],
-                      [1.11 - 7j, 1.28, 1.39, 1.51]])
+    matrix1 = Matrix([[1, 1, 1, 1, 1],
+                      [2, 2, 2, 2, 2],
+                      [3, 3, 3, 3, 3],
+                      [3, 3, 3, 4, 5]])
     matrix2 = Matrix([[29.73, 89.28, 10.00],
                       [10.02, 34.92, 13.23],
                       [71.17, 56.66, 73.33],
                       [11.11, 24.40, 79.11]])
     matrix3 = Matrix([[1, 4, 9]])
-    print(solve(matrix1, Vector([1, 2, 8, 7])))
-    print(matrix1 * matrix2 * 1)
+    #print(solve(matrix1, Vector([1, 2, 8, 7])))
+    print(matrix1.get_standard_mat)
