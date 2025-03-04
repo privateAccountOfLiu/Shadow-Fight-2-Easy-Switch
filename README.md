@@ -10,3 +10,4 @@
   Deserialize your action files (a large number of. obj files) and store them as a Python list object
 ### Movement Files Decode and Encode
 #### The Last Two Buttons
+  Decode your binary action file into the storage format of Python List objects, or encode the action information stored in List format into a binary file that ShadowFight2 can recognize
