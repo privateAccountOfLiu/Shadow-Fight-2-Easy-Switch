@@ -65,9 +65,9 @@ class Obj:  # .obj模型文件的类
 
     def pre_formate_to_bin(self) -> list:  # 转变一帧的数据为lst
         output, tar = [len(self.data['v ']), ], self.data['v '][-8:]
-        del self.data['v '][-8:]
-        for index, content in enumerate(tar):
-            self.data['v '].insert(19 + index, content)
+        # del self.data['v '][-8:]
+        # for index, content in enumerate(tar):
+        #     self.data['v '].insert(19 + index, content)
         output.append([tuple(node) for node in self.data['v ']])
         return output
 
