@@ -1,6 +1,6 @@
-ShadowFight2 Easy Switch(English Version)
+#ShadowFight2 Easy Switch(English Version)
 ## Abstract
-A simple project will give you more fun in ShadowFight2
+A simple Python project that can help you complete file conversion will provide you with a better gaming experience in ShadowFight2
 ## Introduction
 ### Model Transformation
 #### The First Button: .obj to .xml
