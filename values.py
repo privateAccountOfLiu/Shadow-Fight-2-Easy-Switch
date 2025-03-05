@@ -8,7 +8,7 @@ gap_msg_3 = '</Figures>\n</Scene>\n'
 error_mes_0 = 'something_wrong:{}-{}'
 error_mes_1 = 'the iter length must >= 3 but length %d'
 error_mes_2 = 'warning:something_wrong in obj {}-{}'
-error_mes_3 = 'warning:please ensure the content of ./bin_dec/output.bindec is NULL or WHAT YOU WANT'
+error_mes_3 = 'warning:please ensure the content of ./bin_dec/output.csv is NULL or WHAT YOU WANT'
 error_mes_4 = 'This type is not acceptable'
 error_mes_5 = 'object Frame can not mul type except int'
 common_mes_0 = 'press Enter to exit:'
@@ -30,8 +30,7 @@ edge_msg_1 = ('<MN_capsule{1} Type="Capsule"  Edge="MN_Edge-{0}{1}"  '
 
 triangle_msg = '<Triangle{4} Type="Triangle" DoubleSided="-1" Node1="MN{0}{1}" Node2="MN{0}{2}" Node3="MN{0}{3}"/>'
 
-bin_head_text = 'the_num_of_frames = {}\n'
-bin_frame_text = '[{}, \n\t\t\t{}]'
+bin_frame_text = '[{}, \n{}]'
 
 type_child_node = {"weapon": {"ChildNode1": "Weapon-Node4_1",
                               "ChildNode2": "Weapon-Node3_1",

@@ -64,11 +64,7 @@ class Obj:  # .obj模型文件的类
         return args
 
     def pre_formate_to_bin(self) -> list:  # 转变一帧的数据为lst
-        output, tar = [len(self.data['v ']), ], self.data['v '][-8:]
-        # del self.data['v '][-8:]
-        # for index, content in enumerate(tar):
-        #     self.data['v '].insert(19 + index, content)
-        output.append([tuple(node) for node in self.data['v ']])
+        output = [len(self.data['v ']), [tuple(node) for node in self.data['v ']]]
         return output
 
 
@@ -182,7 +178,7 @@ class MoveBin:
             for i in range(size_file):
                 data = unpack('B', f.read(1))
                 nums.append(data[0])
-            return self.bin_decode(nums)
+        return self.bin_decode(nums)
 
     def shape(self, num: int | float = 1) -> None:
         for i, frame in enumerate(self.bin_data):

@@ -199,30 +199,6 @@ class Matrix(list):
         else:
             raise TypeError(f'Can not use {type(other)}')
 
-    @property
-    def get_standard_mat(self):
-        flag, flag1, flag2 = self.i, -1, 0
-        for _i in range(flag):
-            ls = list(range(flag))
-            ls.pop(_i)
-            for _j in ls:
-                print(self)
-                while True:
-                    if self[_i][_i + flag2] and any(self[_i]):
-                        self[_j] = [self[_j][k] - (self[_j][_i + flag2] / self[_i][_i + flag2]) * self[_i][k] for k in range(self.j)]
-                        break
-                    elif not self[_i][_i + flag2]:
-                        flag2 += 1
-                    else:
-                        break
-                if not any(self[_j]) and _j != flag1:
-                    print(any(self[_j]), _j, self[_j], flag1)
-                    self[_j], self[flag1] = self[flag1], self[_j]
-                    flag1 -= 1
-                    ls.insert(_j, _i + 1)
-        return self
-                
-            
 
 class Vector(Matrix):
     def __init__(self, value, is_t=0):
@@ -231,17 +207,3 @@ class Vector(Matrix):
         else:
             value = [[i] for i in value]
         super().__init__(value)
-
-
-if __name__ == '__main__':
-    matrix1 = Matrix([[1, 1, 1, 1, 1],
-                      [2, 2, 2, 2, 2],
-                      [3, 3, 3, 3, 3],
-                      [3, 3, 3, 4, 5]])
-    matrix2 = Matrix([[29.73, 89.28, 10.00],
-                      [10.02, 34.92, 13.23],
-                      [71.17, 56.66, 73.33],
-                      [11.11, 24.40, 79.11]])
-    matrix3 = Matrix([[1, 4, 9]])
-    #print(solve(matrix1, Vector([1, 2, 8, 7])))
-    print(matrix1.get_standard_mat)

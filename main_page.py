@@ -21,7 +21,8 @@ def build_page_obj_to_xml_signal1(ori_ui):
             'type': ori_ui.comboBox_4.currentText(),
             'rotate_method': ori_ui.comboBox.currentText(),
             'is_zoom': True if ori_ui.comboBox_2.currentText() == 'True' else False,
-            'is_draw_edge': True if ori_ui.comboBox_3.currentText() == 'True' else False
+            'begin_id': int(ori_ui.spinBox.text()),
+            'is_draw_edge': False
         }
         obj = edit_obj_data(config, file_name)
         write_xml(config, obj)
@@ -44,7 +45,7 @@ def build_page_objs_to_py_signal1(ori_ui):
         'rotate_method': ori_ui.comboBox.currentText(),
         'is_zoom': True if ori_ui.comboBox_2.currentText() == 'True' else False,
     }
-    write_py_bin(config)
+    write_csv_bin(config)
     ori_ui.buttonBox.accepted.disconnect()
     ori_ui.close()
 
@@ -115,7 +116,7 @@ def build_page_py_to_bin(ori_ui):
     file_btn: QtWidgets.QPushButton = ori_ui.pushButton
     ok_btn: QtWidgets.QDialogButtonBox = ori_ui.buttonBox
     file_label: QtWidgets.QLabel = ori_ui.label_2
-    file_btn.clicked.connect(lambda: add_file('*.py', file_label, file_btn))
+    file_btn.clicked.connect(lambda: add_file('*.csv', file_label, file_btn))
     ok_btn.accepted.connect(lambda: build_page_py_to_bin_signal1(ori_ui))
     ok_btn.rejected.connect(lambda: build_page_py_to_bin_signal2(ori_ui))
 
@@ -144,9 +145,9 @@ if __name__ == '__main__':
     ui_main = uic.loadUi(get_dir('./ui/main_page.ui'))
     ui_main.setWindowIcon(QtGui.QIcon(get_dir('./ui/Image.png')))
     sub_pages = [uic.loadUi(get_dir('./ui/obj_to_xml_page.ui')),
-                 uic.loadUi(get_dir('./ui/objs_to_py.ui')),
-                 uic.loadUi(get_dir('./ui/bin_to_py.ui')),
-                 uic.loadUi(get_dir('./ui/py_to_bin.ui'))]
+                 uic.loadUi(get_dir('./ui/objs_to_csv.ui')),
+                 uic.loadUi(get_dir('./ui/bin_to_csv.ui')),
+                 uic.loadUi(get_dir('./ui/csv_to_bin.ui'))]
     sub_funcs = [build_page_obj_to_xml,
                  build_page_objs_to_py,
                  build_page_bin_to_py,

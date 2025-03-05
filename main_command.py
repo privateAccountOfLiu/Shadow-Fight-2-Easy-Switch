@@ -9,7 +9,7 @@ if __name__ == '__main__':
         move_bin = edit_bin_data(config)
         print_lim_and_ask(obj)
         if config.get('is_to_bin_dec', False):
-            write_py_bin(config)
+            write_csv_bin(config)
         if config.get('is_to_xml', False):
             write_xml(config, obj)
         if config.get('is_decode_bin', False):

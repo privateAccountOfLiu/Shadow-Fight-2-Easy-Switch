@@ -1,7 +1,9 @@
 from classes import *
 import sys
-import importlib.util
+import ast
 import os
+import csv
+import struct
 
 
 def get_dir(path):
@@ -50,57 +52,55 @@ def print_lim_and_ask(obj_p: Obj) -> None:
         exit(0)
 
 
-def write_py_bin(set_config: dict, file_name: str = (a := './objs_to_bin/') + (b := 'output.py')) -> None:
+def write_csv_bin(set_config: dict, file_name: str = (a := './objs_to_bin/') + (b := 'output.csv')) -> None:
     tar = os.listdir(a)
     if b in tar:
         tar.remove(b)
-        print(error_mes_3)
-    with open(file_name, 'w') as f_decode:
-        f_decode.write(bin_head_text.format(len(tar)))
-        f_decode.write('fdata = [\n')
+    with open(file_name, 'w', newline='') as f_decode:
+        _writer = csv.writer(f_decode)
         for obj_name in tar:
-            obj_p = edit_obj_data(set_config, a + obj_name)
-            f_decode.write(str(obj_p.pre_formate_to_bin()) + ',\n')
-        f_decode.write(']')
+            if obj_name[-4:] == '.obj':
+                obj_p = edit_obj_data(set_config, a + obj_name)
+                _writer.writerow(str(_i) for _i in obj_p.pre_formate_to_bin()[1])
 
 
 def write_xml(set_config: dict, obj_p: Obj, file_name='./xml/output.xml') -> None:
     with open(file_name, 'w') as f_xml:
         f_xml.write(gap_msg_0)
-        f_xml.writelines([str(Node(*node, model_type=set_config['type'], node_id=index+1)) + '\n'
+        f_xml.writelines([str(Node(*node, model_type=set_config['type'], node_id=index + set_config['begin_id'])) + '\n'
                           for index, node in enumerate(obj_p.data['v '])])  # 写入Node数据
         f_xml.write(gap_msg_1)
-        f_xml.writelines([str(Edge(node, model_type=set_config['type'], edge_id=index+1)) + '\n'
-                          for index, node in enumerate(obj_p.data['l '])])  # 写入Edge数据
         f_xml.write(gap_msg_2)
-        f_xml.writelines([Edge(node, model_type=set_config['type'],
-                               edge_id=index+1, is_draw=set_config.get('is_draw_edge', False)).draw + '\n'
-                          for index, node in enumerate(obj_p.data['l '])])  # 写入Edge的<Figures>区数据
         f_xml.writelines([str(Triangle(node, model_type=set_config['type'], tri_id=index+1)) + '\n'
                           for index, node in enumerate(obj_p.data['f '])])  # 写入Triangle数据
         f_xml.write(gap_msg_3)
 
 
-def bin_decode(obj_bin: MoveBin, file_name: str = './bin/decode_bin.py') -> None:
-    with open(file_name, 'w') as f:
-        f.write(bin_head_text.format(obj_bin.frames_num))
-        str_data = f'fdata = [\n\t\t'
+def bin_decode(obj_bin: MoveBin, file_name: str = './bin/decode_bin.csv') -> None:
+    with open(file_name, 'w', newline='') as f:
+        _writer = csv.writer(f)
         for i, frame in enumerate(obj_bin.bin_data):
-            str_data += str(frame) + ', \n\t\t'
-        str_data += ']'
-        f.write(str_data)
+            _writer.writerow(str(_i) for _i in frame.points)
 
 
-def bin_encode(filein_name: str = './bin/input.bin', fileout_name: str = './bin/encode_bin.bin') -> None:
-    spec = importlib.util.spec_from_file_location("filein", filein_name)
-    filein = importlib.util.module_from_spec(spec)
-    sys.modules["filein"] = filein
-    spec.loader.exec_module(filein)
-    data, num = filein.fdata, filein.the_num_of_frames
+def bin_encode(filein_name: str = './bin/input.csv', fileout_name: str = './bin/encode_bin.bin') -> None:
+    _output_lst = b''
+    header_struct, frame_header_struct, point_struct, end_byte = (
+        struct.Struct('I'), struct.Struct('4B'),
+        struct.Struct('<3f'), struct.pack('B', 1))
+    with open(filein_name, 'r') as csv_in:
+        _reader, data, num = csv.reader(csv_in), [], 0
+        for row in _reader:
+            data.append([len(row), [ast.literal_eval(_i) for _i in row]])
+            num += 1
     with open(fileout_name, 'wb') as bin_f:
-        bin_f.write(pack('5B', num, 0, 0, 0, 1))
+        bin_f.write(header_struct.pack(num))
+        bin_f.write(end_byte)
         for frame in data:
-            bin_f.write(pack('4B', frame[0], 0, 0, 0))
-            for point in frame[1]:
-                bin_f.write(pack('<3f', *point))
-            bin_f.write(pack('B', 1))
+            bin_f.write(frame_header_struct.pack(frame[0], 0, 0, 0))
+            points_data = b''.join(
+                point_struct.pack(*point) for point in frame[1]
+            )
+            bin_f.write(points_data)
+            bin_f.write(end_byte)
+
