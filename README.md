@@ -1,6 +1,6 @@
 # ShadowFight2 Easy Switch(English Version)
 ## Abstract
-&ensp;&ensp;&ensp;&ensp;A simple Python project that can help you complete file conversion will provide you with a better gaming experience in ShadowFight2
+&ensp;&ensp;A simple Python project that can help you complete file conversion will provide you with a better gaming experience in ShadowFight2
 ## Introduction
 ### Code Introduction
 &ensp;&ensp;&ensp;&ensp;Here is an EXE file and some source code. If you want to use the program directly, simply download the EXE file and run it (note that it will create three new folders in its directory). 
