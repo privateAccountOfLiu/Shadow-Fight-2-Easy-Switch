@@ -85,9 +85,7 @@ def bin_decode(obj_bin: MoveBin, file_name: str = './bin/decode_bin.csv') -> Non
 
 def bin_encode(filein_name: str = './bin/input.csv', fileout_name: str = './bin/encode_bin.bin') -> None:
     _output_lst = b''
-    header_struct, frame_header_struct, point_struct, end_byte = (
-        struct.Struct('I'), struct.Struct('4B'),
-        struct.Struct('<3f'), struct.pack('B', 1))
+    header_struct, point_struct, end_byte = struct.Struct('I'), struct.Struct('<3f'), struct.pack('B', 1)
     with open(filein_name, 'r') as csv_in:
         _reader, data, num = csv.reader(csv_in), [], 0
         for row in _reader:
@@ -97,10 +95,9 @@ def bin_encode(filein_name: str = './bin/input.csv', fileout_name: str = './bin/
         bin_f.write(header_struct.pack(num))
         bin_f.write(end_byte)
         for frame in data:
-            bin_f.write(frame_header_struct.pack(frame[0], 0, 0, 0))
+            bin_f.write(header_struct.pack(frame[0]))
             points_data = b''.join(
                 point_struct.pack(*point) for point in frame[1]
             )
             bin_f.write(points_data)
             bin_f.write(end_byte)
-
