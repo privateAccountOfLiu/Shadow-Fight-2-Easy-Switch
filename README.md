@@ -1,9 +1,9 @@
 # ShadowFight2 Easy Switch(English Version)
 ## Abstract
-&ensp;&ensp;A simple Python project that can help you complete file conversion will provide you with a better gaming experience in ShadowFight2
+&ensp;&ensp;&ensp;&ensp;A simple Python project that can help you complete file conversion will provide you with a better gaming experience in ShadowFight2
 ## Introduction
 ### Code Introduction
-&ensp;&ensp;&ensp;&ensp;Here is an EXE file and some source code. If you want to use the program directly, simply download the EXE file and run it (note that it will create three new folders in its directory). 
+&ensp;&ensp;&ensp;&ensp;Here is an EXE file and some source code.If you want to use the program directly, simply download the EXE file and run it (note that it will create three new folders in its directory). 
 &ensp;&ensp;&ensp;&ensp;If you prefer to run the program from the source code, you need to download all the source code(.py)(.txt)(.ui).And then, there are two options:
   1. GUI Application Built with Qt (Recommended): You need to run the  `main_page.py`  program. Before doing so, install the PyQt6 library by running the following command in your terminal:`pip install PyQt6`
 Then, run the Python entry script  `main_page.py`  and use the widgets to select your desired feature.
