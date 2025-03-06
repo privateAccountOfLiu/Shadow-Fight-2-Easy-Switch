@@ -118,12 +118,12 @@
      <widget class="QComboBox" name="comboBox_2">
       <item>
        <property name="text">
-        <string>True</string>
+        <string>False</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>False</string>
+        <string>True</string>
        </property>
       </item>
      </widget>
@@ -181,25 +181,11 @@
     <item row="8" column="0">
      <widget class="QLabel" name="label_8">
       <property name="text">
-       <string>is draw edge:</string>
+       <string>begin_id</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
-     </widget>
-    </item>
-    <item row="8" column="1" colspan="2">
-     <widget class="QComboBox" name="comboBox_3">
-      <item>
-       <property name="text">
-        <string>True</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>False</string>
-       </property>
-      </item>
      </widget>
     </item>
     <item row="2" column="1">
@@ -305,6 +291,31 @@
         <string>ranged</string>
        </property>
       </item>
+      <item>
+       <property name="text">
+        <string>armor_a</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>armor_b</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>armor_c</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="8" column="1" colspan="2">
+     <widget class="QSpinBox" name="spinBox">
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>1000000</number>
+      </property>
      </widget>
     </item>
    </layout>

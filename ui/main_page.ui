@@ -37,7 +37,7 @@
      <item row="2" column="0" colspan="2">
       <widget class="QPushButton" name="pushButton">
        <property name="text">
-        <string>Bin: (.obj)s to .py</string>
+        <string>Bin: (.obj)s to .csv</string>
        </property>
       </widget>
      </item>
@@ -51,14 +51,14 @@
      <item row="3" column="0" colspan="2">
       <widget class="QPushButton" name="pushButton_4">
        <property name="text">
-        <string>Bin: Decode(.bin to .py(text))</string>
+        <string>Bin: Decode(.bin to .csv)</string>
        </property>
       </widget>
      </item>
      <item row="4" column="0" colspan="2">
       <widget class="QPushButton" name="pushButton_5">
        <property name="text">
-        <string>Bin: Encode(.py to .bin)</string>
+        <string>Bin: Encode(.csv to .bin)</string>
        </property>
       </widget>
      </item>
