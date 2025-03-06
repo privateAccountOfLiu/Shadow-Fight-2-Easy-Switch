@@ -12,8 +12,8 @@ Then, run the Python entry script  `main_page.py`  and use the widgets to sele
 #### The First Button: .obj to .xml
 &ensp;&ensp;&ensp;&ensp;You can transform your Wavefont model(.obj) which is usually seen on the internet into ShadowFight2 model(.xml) conveniently by this function.
 ### Function2: Movement Files(.bin, .bytes) Transformation
-#### The Second Button: .obj to .py
-&ensp;&ensp;&ensp;&ensp;Deserialize your action files (a large number of. obj files) and store them as a Python list object
+#### The Second Button: .obj to .csv
+&ensp;&ensp;&ensp;&ensp;Deserialize your action files (a large number of. obj files) and store them as a csv file.
 ### Function3: Movement Files Decode and Encode
 #### The Last Two Buttons
-&ensp;&ensp;&ensp;&ensp;Decode your binary action file into the storage format of Python List objects, or encode the action information stored in List format into a binary file that ShadowFight2 can recognize
+&ensp;&ensp;&ensp;&ensp;Decode your binary action file into the storage format of a csv table, or encode the action information stored in csv table format into a binary file that ShadowFight2 can recognize
