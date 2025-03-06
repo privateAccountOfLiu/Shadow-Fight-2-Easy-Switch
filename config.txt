@@ -6,9 +6,10 @@
     'type': 'weapon',
     'rotate_method': 'xyz',
     'is_zoom': False,
-    'is_draw_edge': True,
+    'is_draw_edge': False,
     'is_to_xml': True,
     'is_to_bin_dec': True,
     'is_decode_bin': True,
-    'bin_shape_arg': 1
+    'bin_shape_arg': 1, 
+    'begin_id': 1
  }
