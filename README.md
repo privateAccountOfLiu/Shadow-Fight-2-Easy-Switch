@@ -18,6 +18,8 @@
 ### 功能3：动作文件解码与编码
 #### 最后两个按钮
 &emsp;&emsp;将二进制动作文件解码为csv表格存储格式，或将csv表格中的动作信息编码为《ShadowFight2》可识别的二进制文件。
+## 注意事项
+### 本程序为开源项目，请勿用作商业活动！
 ***
 # ShadowFight2 Easy Switch(English Version)
 ## Abstract
@@ -39,4 +41,6 @@ You need to modify the functions and parameters in the  `config.txt`  file loc
 &ensp;&ensp;&ensp;&ensp;Deserialize your action files (a large number of. obj files) and store them as a csv file.
 ### Function3: Movement Files Decode and Encode
 #### The Last Two Buttons
-&ensp;&ensp;&ensp;&ensp;Decode your binary action file into the storage format of a csv table, or encode the action information stored in csv table format into a binary file that ShadowFight2 can recognize
+&ensp;&ensp;&ensp;&ensp;Decode your binary action file into the storage format of a csv table, or encode the action information stored in csv table format into a binary file that ShadowFight2 can recognize.
+## Note
+### This program is an open source project, please do not use it for commercial activities!
